@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MobileImageClassifierDemo.ViewModels"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             x:Class="MobileImageClassifierDemo.Views.CustomVisionView"
+             ios:Page.UseSafeArea="True">
+
+    <ContentPage.BindingContext>
+        <vm:CustomVisionViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Icon="pick.png"
+                     Text="Pick Photo"
+                     Order="Primary"
+                     Command="{Binding TakePhotoCommand}"
+                     CommandParameter="{StaticResource FalseValue}"
+                     Priority="0" />
+
+        <ToolbarItem Icon="camera.png"
+                     Text="Take Photo"
+                     Order="Primary"
+                     Command="{Binding TakePhotoCommand}"
+                     CommandParameter="{StaticResource TrueValue}"
+                     Priority="1" />
+
+        <ToolbarItem Icon="cloud.png"
+                     Text="Classify (Azure)"
+                     Order="Primary"
+                     Command="{Binding ClassifyPhotoCommand}"
+                     CommandParameter="{StaticResource FalseValue}"
+                     Priority="2" />
+
+        <ToolbarItem Icon="brain.png"
+                     Text="Classify (Local)"
+                     Order="Primary"
+                     Command="{Binding ClassifyPhotoCommand}"
+                     CommandParameter="{StaticResource TrueValue}"
+                     Priority="3" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout Padding="10">
+            <Label Text="Image"
+                   Margin="5" 
+                   TextColor="Blue"
+                   FontSize="Large"
+                   FontAttributes="Bold"/>
+
+            <Image Source="{Binding PhotoStream}"
+                   Margin="5"
+                   WidthRequest="400" 
+                   HeightRequest="400"  
+                   Aspect="AspectFit"
+                   HorizontalOptions="CenterAndExpand"/>
+
+            <ActivityIndicator Margin="5"
+                               IsVisible="{Binding IsBusy}" 
+                               IsRunning="{Binding IsBusy}" 
+                               IsEnabled="{Binding IsBusy}"
+                               HorizontalOptions="CenterAndExpand"/>
+
+            <Label Text="{Binding ClassificationResult, StringFormat='Classification Result: {0}'}"
+                   Margin="5" 
+                   TextColor="Blue"
+                   FontSize="Large"
+                   FontAttributes="Bold"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
